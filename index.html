@@ -3,34 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Score Analyzer</title>
+    <title>Student Score Report</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<div class="container">
-    <h1>📊 Student Score Analyzer</h1>
+    <div class="container">
+        <h1> Student Score Analyzer</h1>
 
-    <div class="card">
-        <h2>Scores</h2>
-        <ul id="scoresList"></ul>
+        <p>Enter 10 student scores below:</p>
+
+        <div id="inputs"></div>
+
+        <button onclick="generateReport()">Generate Report</button>
+
+        <div id="output"></div>
     </div>
 
-    <div class="card grid">
-        <p><strong>Total:</strong> <span id="total"></span></p>
-        <p><strong>Average:</strong> <span id="average"></span></p>
-        <p><strong>Highest:</strong> <span id="highest"></span></p>
-        <p><strong>Lowest:</strong> <span id="lowest"></span></p>
-        <p><strong>Passed:</strong> <span id="passed"></span></p>
-        <p><strong>Failed:</strong> <span id="failed"></span></p>
-    </div>
-
-    <div class="card">
-        <h2>Above Average</h2>
-        <ul id="aboveAverage"></ul>
-    </div>
-</div>
-
-<script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

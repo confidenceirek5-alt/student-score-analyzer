@@ -1,57 +1,69 @@
-let scores = [78, 45, 90, 67, 31, 88, 56, 49, 70, 95];
 
-let scoresList = document.getElementById("scoresList");
-let totalEl = document.getElementById("total");
-let averageEl = document.getElementById("average");
-let highestEl = document.getElementById("highest");
-let lowestEl = document.getElementById("lowest");
-let passedEl = document.getElementById("passed");
-let failedEl = document.getElementById("failed");
-let aboveAverageList = document.getElementById("aboveAverage");
+let inputContainer = document.getElementById("inputs");
 
-for (let i = 0; i < scores.length; i++) {
-    let li = document.createElement("li");
-    li.textContent = scores[i];
-    scoresList.appendChild(li);
+for (let i = 0; i < 10; i++) {
+    let input = document.createElement("input");
+    input.type = "number";
+    input.placeholder = "Student " + (i + 1);
+    input.classList.add("scoreInput");
+    inputContainer.appendChild(input);
 }
 
-let total = 0;
-let highest = scores[0];
-let lowest = scores[0];
-let passed = 0;
-let failed = 0;
+function generateReport() {
+    let inputs = document.querySelectorAll(".scoreInput");
+    let scores = [];
 
-for (let i = 0; i < scores.length; i++) {
-    total += scores[i];
+    inputs.forEach(input => {
+        scores.push(Number(input.value));
+    });
 
-    if (scores[i] > highest) {
-        highest = scores[i];
+    let total = 0;
+    let highest = scores[0];
+    let lowest = scores[0];
+    let passCount = 0;
+    let failCount = 0;
+
+    for (let i = 0; i < scores.length; i++) {
+        total += scores[i];
+
+        if (scores[i] > highest) {
+            highest = scores[i];
+        }
+
+        if (scores[i] < lowest) {
+            lowest = scores[i];
+        }
+
+        if (scores[i] >= 50) {
+            passCount++;
+        } else {
+            failCount++;
+        }
     }
 
-    if (scores[i] < lowest) {
-        lowest = scores[i];
+    let average = total / scores.length;
+
+    let output = document.getElementById("output");
+
+    let result = `
+        <strong>All Scores:</strong><br>
+        ${scores.join(", ")} <br><br>
+
+        <strong>Total:</strong> ${total} <br>
+        <strong>Average:</strong> ${average.toFixed(2)} <br>
+        <strong>Highest:</strong> ${highest} <br>
+        <strong>Lowest:</strong> ${lowest} <br>
+        <strong>Passed:</strong> ${passCount} <br>
+        <strong>Failed:</strong> ${failCount} <br><br>
+
+        <strong>Above Average:</strong><br>
+    `;
+
+    for (let i = 0; i < scores.length; i++) {
+        if (scores[i] > average) {
+            result += `Student ${i + 1}: ${scores[i]} <br>`;
+        }
     }
 
-    if (scores[i] >= 50) {
-        passed++;
-    } else {
-        failed++;
-    }
-}
-
-let average = total / scores.length;
-
-totalEl.textContent = total;
-averageEl.textContent = average.toFixed(1);
-highestEl.textContent = highest;
-lowestEl.textContent = lowest;
-passedEl.textContent = passed;
-failedEl.textContent = failed;
-
-for (let i = 0; i < scores.length; i++) {
-    if (scores[i] > average) {
-        let li = document.createElement("li");
-        li.textContent = scores[i];
-        aboveAverageList.appendChild(li);
-    }
+    output.innerHTML = result;
 }
